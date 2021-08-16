@@ -1,3 +1,4 @@
+import 'package:flash_card/dictionary.dart';
 import 'package:flash_card/new_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,10 @@ class MyApp extends StatelessWidget {
 
 class HomePage extends StatelessWidget {
   NewCard newCard = NewCard();
+  Dictionary storeOfCard = Dictionary();
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,25 +44,31 @@ class HomePage extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15.0),
-            child: TextButton(
-              child: Icon(
+            child: IconButton(
+              tooltip: 'добавить карту в словарь',
+              icon: const Icon(
                 Icons.post_add_sharp,
                 color: Colors.blueAccent,
               ),
-              onPressed: () => newCard.printValue(),
+              onPressed: () {
+                storeOfCard.dictionary.add(newCard);
+                newCard.printValue();
+              },
             ),
           ),
         ],
       ),
       body: HomePageBody(
         newCardBody: newCard,
+        // newDictionary: addNewCardToDictionary,
       ),
     );
   }
 }
 
 class HomePageBody extends StatelessWidget {
-  NewCard newCardBody = NewCard();
+  NewCard newCardBody;
+  // Function newDictionary;
   HomePageBody({required this.newCardBody});
   @override
   Widget build(BuildContext context) {
@@ -85,6 +96,7 @@ class HomePageBody extends StatelessWidget {
             ),
             child: NewInputCard(
               newCardInput: newCardBody,
+              // newInputDictionary: newDictionary,
             ),
           ),
         ),
@@ -198,7 +210,9 @@ class HomePageBody extends StatelessWidget {
 }
 
 class NewInputCard extends StatefulWidget {
-  NewCard newCardInput = NewCard();
+  NewCard newCardInput;
+  // Function newInputDictionary;
+
   NewInputCard({required this.newCardInput});
 
   @override
@@ -208,7 +222,8 @@ class NewInputCard extends StatefulWidget {
 class _NewInputCardState extends State<NewInputCard> {
   late TextEditingController _firstSideController;
   late TextEditingController _secondSideController;
-  var value2;
+  final _formKey = GlobalKey<FormState>();
+  final _myInputCardKey = GlobalKey<_NewInputCardState>();
 
   @override
   void initState() {
@@ -233,10 +248,12 @@ class _NewInputCardState extends State<NewInputCard> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           TextFormField(
+            onChanged: (value) => widget.newCardInput.setFirstSide(value),
             controller: _firstSideController,
             onSaved: (String? value) => print('value is: $value'),
             textAlign: TextAlign.center,
@@ -259,11 +276,11 @@ class _NewInputCardState extends State<NewInputCard> {
           ),
           TextFormField(
             controller: _secondSideController,
-            onSaved: (String? value) {
-              value2 = value;
-              widget.newCardInput.setSecondSide(value!);
-              print('value is: $value');
-            },
+            onChanged: (value) => widget.newCardInput.setSecondSide(value),
+            // onSaved: (String? value) {
+            //   widget.newCardInput.setSecondSide(value!);
+            //
+            // },
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 25.0,
@@ -276,7 +293,7 @@ class _NewInputCardState extends State<NewInputCard> {
               border: InputBorder.none,
             ),
           ),
-          TextButton(onPressed: (){print('${_secondSideController.text} value: $value2');}, child: Text('button'),),
+
         ],
       ),
     );

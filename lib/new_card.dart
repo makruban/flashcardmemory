@@ -11,5 +11,6 @@ class NewCard {
 
   void printValue(){
     print(_firstSide);
+    print(_secondSide);
   }
 }
