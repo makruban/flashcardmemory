@@ -1,11 +1,14 @@
-import 'package:flash_card/dictionary.dart';
-import 'package:flash_card/new_card.dart';
+import 'package:flash_card/models/dictionary.dart';
+import 'package:flash_card/dictionary_list.dart';
+import 'package:flash_card/models/new_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MyApp());
 }
+
+final keyInput = GlobalKey<_NewInputCardState>();
 
 class MyApp extends StatelessWidget {
   @override
@@ -19,10 +22,16 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  NewCard newCard = NewCard();
+
   Dictionary storeOfCard = Dictionary();
 
-
+  void addNewCard(String firstSideText, String secondSideText) {
+    NewCard newAddCard = NewCard(
+      firstSide: firstSideText,
+      secondSide: secondSideText,
+    );
+    storeOfCard.dictionary.add(newAddCard);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,29 +56,46 @@ class HomePage extends StatelessWidget {
             child: IconButton(
               tooltip: 'добавить карту в словарь',
               icon: const Icon(
-                Icons.post_add_sharp,
+                Icons.add,
                 color: Colors.blueAccent,
               ),
               onPressed: () {
-                storeOfCard.dictionary.add(newCard);
-                newCard.printValue();
+                keyInput.currentState?.addNewInputCard();
+                keyInput.currentState?.validateForm();
               },
             ),
           ),
         ],
       ),
       body: HomePageBody(
-        newCardBody: newCard,
+        addNewCard: addNewCard,
         // newDictionary: addNewCardToDictionary,
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.arrow_forward_rounded),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return DictionaryList(
+                  listDictionary: storeOfCard,
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }
 }
 
 class HomePageBody extends StatelessWidget {
-  NewCard newCardBody;
+  final Function addNewCard;
+
   // Function newDictionary;
-  HomePageBody({required this.newCardBody});
+  HomePageBody({required this.addNewCard});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -95,7 +121,8 @@ class HomePageBody extends StatelessWidget {
               ],
             ),
             child: NewInputCard(
-              newCardInput: newCardBody,
+              addNewCard: addNewCard,
+              keyInput: keyInput,
               // newInputDictionary: newDictionary,
             ),
           ),
@@ -210,10 +237,12 @@ class HomePageBody extends StatelessWidget {
 }
 
 class NewInputCard extends StatefulWidget {
-  NewCard newCardInput;
+  final Function addNewCard;
+
   // Function newInputDictionary;
 
-  NewInputCard({required this.newCardInput});
+  NewInputCard({required Key keyInput, required this.addNewCard})
+      : super(key: keyInput);
 
   @override
   _NewInputCardState createState() => _NewInputCardState();
@@ -223,7 +252,6 @@ class _NewInputCardState extends State<NewInputCard> {
   late TextEditingController _firstSideController;
   late TextEditingController _secondSideController;
   final _formKey = GlobalKey<FormState>();
-  final _myInputCardKey = GlobalKey<_NewInputCardState>();
 
   @override
   void initState() {
@@ -239,9 +267,13 @@ class _NewInputCardState extends State<NewInputCard> {
     super.dispose();
   }
 
-  void printController() {
-    print(_firstSideController.text);
-    print(_secondSideController.text);
+ void addNewInputCard() {
+   widget.addNewCard(_firstSideController.text, _secondSideController.text);
+  }
+
+  void validateForm() {
+    _firstSideController.clear();
+    _secondSideController.clear();
   }
 
   // NewCard newCard = NewCard();
@@ -253,9 +285,7 @@ class _NewInputCardState extends State<NewInputCard> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           TextFormField(
-            onChanged: (value) => widget.newCardInput.setFirstSide(value),
             controller: _firstSideController,
-            onSaved: (String? value) => print('value is: $value'),
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 25.0,
@@ -276,11 +306,6 @@ class _NewInputCardState extends State<NewInputCard> {
           ),
           TextFormField(
             controller: _secondSideController,
-            onChanged: (value) => widget.newCardInput.setSecondSide(value),
-            // onSaved: (String? value) {
-            //   widget.newCardInput.setSecondSide(value!);
-            //
-            // },
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 25.0,
@@ -293,7 +318,6 @@ class _NewInputCardState extends State<NewInputCard> {
               border: InputBorder.none,
             ),
           ),
-
         ],
       ),
     );
