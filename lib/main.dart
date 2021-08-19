@@ -22,8 +22,38 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-
   Dictionary storeOfCard = Dictionary();
+  AppBar appBarchik = AppBar(
+    elevation: 0.0,
+    backgroundColor: Colors.white,
+    centerTitle: true,
+    title: Text(
+      'Новая карточка',
+      style: TextStyle(
+        color: Colors.black87,
+      ),
+    ),
+    leading: Icon(
+      Icons.menu,
+      color: Colors.blueAccent,
+    ),
+    actions: [
+      Padding(
+        padding: const EdgeInsets.only(right: 15.0),
+        child: IconButton(
+          tooltip: 'добавить карту в словарь',
+          icon: const Icon(
+            Icons.add,
+            color: Colors.blueAccent,
+          ),
+          onPressed: () {
+            keyInput.currentState?.addNewInputCard();
+            keyInput.currentState?.validateForm();
+          },
+        ),
+      ),
+    ],
+  );
 
   void addNewCard(String firstSideText, String secondSideText) {
     NewCard newAddCard = NewCard(
@@ -36,40 +66,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: Text(
-          'Новая карточка',
-          style: TextStyle(
-            color: Colors.black87,
-          ),
+      appBar: appBarchik,
+      body: SingleChildScrollView(
+        child: HomePageBody(
+          addNewCard: addNewCard,
+          appBar: appBarchik,
+          // newDictionary: addNewCardToDictionary,
         ),
-        leading: Icon(
-          Icons.menu,
-          color: Colors.blueAccent,
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15.0),
-            child: IconButton(
-              tooltip: 'добавить карту в словарь',
-              icon: const Icon(
-                Icons.add,
-                color: Colors.blueAccent,
-              ),
-              onPressed: () {
-                keyInput.currentState?.addNewInputCard();
-                keyInput.currentState?.validateForm();
-              },
-            ),
-          ),
-        ],
-      ),
-      body: HomePageBody(
-        addNewCard: addNewCard,
-        // newDictionary: addNewCardToDictionary,
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.arrow_forward_rounded),
@@ -92,46 +95,54 @@ class HomePage extends StatelessWidget {
 
 class HomePageBody extends StatelessWidget {
   final Function addNewCard;
+  final AppBar appBar;
 
   // Function newDictionary;
-  HomePageBody({required this.addNewCard});
+  HomePageBody({required this.addNewCard, required this.appBar});
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      // mainAxisSize: MainAxisSize.min,
       children: [
-        Expanded(
-          flex: 8,
-          child: Container(
-            margin: EdgeInsets.all(22.0),
-            decoration: BoxDecoration(
-              color: Colors.yellow,
-              // border: Border.all(
-              //   color: Colors.black87,
-              // ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(10.0),
+        Container(
+          height: (MediaQuery.of(context).size.height -
+                  appBar.preferredSize.height -
+                  MediaQuery.of(context).padding.top -
+                  MediaQuery.of(context).padding.bottom) *
+              0.55,
+          margin: EdgeInsets.all(22.0),
+          decoration: BoxDecoration(
+            color: Colors.yellow,
+            // border: Border.all(
+            //   color: Colors.black87,
+            // ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(10.0),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                offset: Offset(1.0, 2.0),
+                blurRadius: 6.0,
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(1.0, 2.0),
-                  blurRadius: 6.0,
-                ),
-              ],
-            ),
-            child: NewInputCard(
-              addNewCard: addNewCard,
-              keyInput: keyInput,
-              // newInputDictionary: newDictionary,
-            ),
+            ],
+          ),
+          child: NewInputCard(
+            addNewCard: addNewCard,
+            keyInput: keyInput,
+            // newInputDictionary: newDictionary,
           ),
         ),
-        Expanded(
-          flex: 4,
+        Container(
+          height: (MediaQuery.of(context).size.height -
+                  appBar.preferredSize.height -
+                  MediaQuery.of(context).padding.top -
+                  MediaQuery.of(context).padding.bottom) *
+              0.29,
           child: Stack(
             children: [
-              Container(),
+              // Container(),
               Container(
                 margin: EdgeInsets.only(
                     left: 38.0, right: 62.0, top: 42.0, bottom: 18.0),
@@ -163,36 +174,71 @@ class HomePageBody extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   color: Colors.yellow,
                 ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Deutsch',
-                          style: TextStyle(
-                            fontSize: 50.0,
+                child: Stack(
+                  children: [
+                    Container(
+                      child: Column(
+                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: FittedBox(
+                              child: Text(
+                                'Deutsch',
+                                style: TextStyle(
+                                  // fontSize: 50.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          Expanded(
+                            child: FittedBox(
+                              child: Text(
+                                'глаголы',
+                                style: TextStyle(
+                                    fontSize: 5.0,
+                                    ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 120, vertical: 10),
+                              // height: MediaQuery.of(context).size.height * 0.1,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50)),
+                                color: Colors.grey,
+                              ),
+                              child: FittedBox(
+                                child: Text(
+                                  '6122',
+                                  style: TextStyle(
+                                    // fontSize: 28.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      Expanded(
-                        child: Text(
-                          'глаголы',
-                          style: TextStyle(
-                            fontSize: 30.0,
-                          ),
+                    ),
+                    Positioned(
+                      // height: 20,
+                      top: -10,
+                      right: -10,
+                      width: 45.0,
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                          color: Colors.red,
                         ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(left: 120.0, right: 120.0),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
-                            color: Colors.grey,
-                          ),
+                        child: FittedBox(
                           child: Text(
-                            '6122',
+                            '6',
                             style: TextStyle(
                               fontSize: 18.0,
                               color: Colors.white,
@@ -200,36 +246,23 @@ class HomePageBody extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                  // overflow: Overflow.visible,
+                  clipBehavior: Clip.none,
+                  alignment: AlignmentDirectional.topEnd,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 20, bottom: 170, left: 310, right: 25),
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    color: Colors.red,
-                  ),
-                  child: Text(
-                    '6',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              )
             ],
           ),
         ),
-        Expanded(
-          flex: 1,
-          child: Container(
-            color: Colors.grey,
-          ),
+        Container(
+          height: (MediaQuery.of(context).size.height -
+                  appBar.preferredSize.height -
+                  MediaQuery.of(context).padding.top -
+                  MediaQuery.of(context).padding.bottom) *
+              0.07,
+          color: Colors.grey,
         ),
       ],
     );
@@ -267,8 +300,8 @@ class _NewInputCardState extends State<NewInputCard> {
     super.dispose();
   }
 
- void addNewInputCard() {
-   widget.addNewCard(_firstSideController.text, _secondSideController.text);
+  void addNewInputCard() {
+    widget.addNewCard(_firstSideController.text, _secondSideController.text);
   }
 
   void validateForm() {
@@ -305,6 +338,9 @@ class _NewInputCardState extends State<NewInputCard> {
             endIndent: 6.0,
           ),
           TextFormField(
+            //         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => DictionaryList(
+            // listDictionary: storeOfCard,
+            // ),),),
             controller: _secondSideController,
             textAlign: TextAlign.center,
             style: TextStyle(
