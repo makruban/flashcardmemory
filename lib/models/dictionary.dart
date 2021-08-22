@@ -1,6 +1,6 @@
-import 'package:flash_card/models/new_card.dart';
+import 'package:flash_card/models/flash_card.dart';
 
 class Dictionary{
   late final String nameOfDictionary;
-  final List<NewCard> dictionary = [];
+  final List<FlashCard> dictionary = [];
 }

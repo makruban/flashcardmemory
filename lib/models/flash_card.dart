@@ -1,15 +1,18 @@
-class NewCard {
+import 'package:intl/intl.dart';
+
+
+class FlashCard {
    late final String? _firstSide;
    late final String? _secondSide;
    late final String _id;
-   late final DateTime _dateTime;
+   late final String _creatingDateCard;
 
    static int count = 0;
 
-   NewCard({String? firstSide, String? secondSide}){
+   FlashCard({String? firstSide, String? secondSide}){
      setFirstSide(firstSide);
      setSecondSide(secondSide);
-     setDateTime(DateTime.now());
+     setCreatingDateCard(DateTime.now());
      setID(DateTime.now().toString());
      count++;
    }
@@ -25,8 +28,8 @@ class NewCard {
      this._id = id;
    }
 
-   void setDateTime(DateTime dateTime){
-     this._dateTime = dateTime;
+   void setCreatingDateCard(DateTime dateTime){
+     this._creatingDateCard = DateFormat('yyyy-MM-dd').format(dateTime);
    }
   String? getFirstSide(){
     return _firstSide;
@@ -40,8 +43,8 @@ class NewCard {
      return _id;
    }
 
-   DateTime getDateTime(){
-     return _dateTime;
+   String getDateTime(){
+     return _creatingDateCard;
    }
   void printValue(){
     print(_firstSide);

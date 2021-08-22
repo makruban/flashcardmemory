@@ -1,5 +1,5 @@
 import 'package:flash_card/models/dictionary.dart';
-import 'package:flash_card/models/new_card.dart';
+import 'package:flash_card/models/flash_card.dart';
 import 'package:flutter/material.dart';
 
 class DictionaryList extends StatefulWidget {
@@ -16,6 +16,7 @@ class _DictionaryListState extends State<DictionaryList> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
@@ -27,67 +28,86 @@ class _DictionaryListState extends State<DictionaryList> {
                     children: widget.listDictionary.dictionary.map(
                       (crd) {
                         return Card(
-                          color: Colors.yellow,
+                          color: Theme.of(context).primaryColor,
                           elevation: 6.0,
                           margin: EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'номер: ${crd.getDateTime()}',
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      setState(() {
-
-                                        widget.listDictionary.dictionary.removeWhere((element) => element.getID() == crd.getID());
-                                      });
-                                    },
-
-                                    icon: Icon(
-                                      Icons.delete_outline_sharp,
-                                      color: Colors.red,
-                                      // size: 18.0,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      'id: ${crd.getID()}',
                                     ),
-                                    // iconSize: 15.0,
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                'Deutsch',
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
+
+                                  ],
                                 ),
-                              ),
-                              Text(
-                                crd.getFirstSide()!,
-                                style: TextStyle(
-                                  fontSize: 16.0,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Deutsch',
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        setState(() {
+
+                                          widget.listDictionary.dictionary.removeWhere((element) => element.getID() == crd.getID());
+                                        });
+                                      },
+
+                                      icon: Icon(
+                                        Icons.delete_outline_sharp,
+                                        color: Colors.red,
+                                        // size: 18.0,
+                                      ),
+                                      // iconSize: 15.0,
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Text(
-                                crd.getSecondSide()!,
-                                style: TextStyle(
-                                  fontSize: 16.0,
+                                Card(
+
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        crd.getFirstSide()!,
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                      Divider(),
+                                      Text(
+                                        crd.getSecondSide()!,
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  color: Theme.of(context).primaryColor,
+                                  elevation: 3,
                                 ),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    crd.getDateTime().toString(),
-                                  ),
-                                  Text(
-                                    'Переодичность: 3',
-                                  ),
-                                ],
-                              ),
-                            ],
+
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                    ('Дата создания: ${crd.getDateTime().toString()}'),
+                                    ),
+                                    Text(
+                                      'Период: 3',
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
@@ -108,7 +128,7 @@ class _DictionaryListState extends State<DictionaryList> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Всего карточек: ${NewCard.count}',
+                    'Всего карточек: ${FlashCard.count}',
                     style: TextStyle(
                       fontSize: 18.0,
                     ),
