@@ -2,6 +2,7 @@ import 'package:flash_card/constants.dart';
 import 'package:flash_card/dictionary_list.dart';
 import 'package:flash_card/main.dart';
 import 'package:flash_card/models/redictioncontainer.dart';
+import 'package:flash_card/screens/choose_side_page.dart';
 import 'package:flutter/material.dart';
 
 import '../models/newinputcard.dart';
@@ -137,106 +138,109 @@ class HomePageBody extends StatelessWidget {
             // newInputDictionary: newDictionary,
           ),
         ),
-        Container(
-          height: mediaHeight * 0.29,
-          child: Stack(
-            children: [
-              // Container(),
-              ReDictionContainer(
-                marginContainer: EdgeInsets.only(
-                    left: 38.0, right: 62.0, top: 42.0, bottom: 18.0),
-                boxShadowList: kBoxShadow,
-              ),
-              ReDictionContainer(
-                marginContainer: EdgeInsets.only(
-                    left: 44.0, right: 56.0, top: 36.0, bottom: 24.0),
-              ),
-              ReDictionContainer(
-                marginContainer: EdgeInsets.symmetric(horizontal: 50.0, vertical: 30.0),
-                child: Stack(
-                  children: [
-                    Container(
-                      child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            child: FittedBox(
-                              child: Text(
-                                'Deutsch',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: FittedBox(
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Text(
-                                  'глаголы',
-                                  style: TextStyle(
-                                      // fontSize: 5.0,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 120, vertical: 10),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(50)),
-                                color: Colors.grey,
-                              ),
+        GestureDetector(
+          child: Container(
+            height: mediaHeight * 0.29,
+            child: Stack(
+              children: [
+                // Container(),
+                ReDictionContainer(
+                  marginContainer: EdgeInsets.only(
+                      left: 38.0, right: 62.0, top: 42.0, bottom: 18.0),
+                  boxShadowList: kBoxShadow,
+                ),
+                ReDictionContainer(
+                  marginContainer: EdgeInsets.only(
+                      left: 44.0, right: 56.0, top: 36.0, bottom: 24.0),
+                ),
+                ReDictionContainer(
+                  marginContainer: EdgeInsets.symmetric(horizontal: 50.0, vertical: 30.0),
+                  child: Stack(
+                    children: [
+                      Container(
+                        child: Column(
+                          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
                               child: FittedBox(
                                 child: Text(
-                                  '6122',
+                                  'Deutsch',
                                   style: TextStyle(
-                                    fontSize: kDictionaryAmountSize,
-                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      // height: 20,
-                      top: -10,
-                      right: -20,
-                      width: 45.0,
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(50)),
-                          color: Colors.red,
+                            Expanded(
+                              child: FittedBox(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                    'глаголы',
+                                    style: TextStyle(
+                                        // fontSize: 5.0,
+                                        ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 120, vertical: 10),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(50)),
+                                  color: Colors.grey,
+                                ),
+                                child: FittedBox(
+                                  child: Text(
+                                    '6122',
+                                    style: TextStyle(
+                                      fontSize: kDictionaryAmountSize,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        child: FittedBox(
-                          child: Text(
-                            '6',
-                            style: TextStyle(
-                              fontSize: kDictionaryAmountSize,
-                              color: Colors.white,
+                      ),
+                      Positioned(
+                        // height: 20,
+                        top: -10,
+                        right: -20,
+                        width: 45.0,
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                            color: Colors.red,
+                          ),
+                          child: FittedBox(
+                            child: Text(
+                              '6',
+                              style: TextStyle(
+                                fontSize: kDictionaryAmountSize,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                  // overflow: Overflow.visible,
-                  clipBehavior: Clip.none,
-                  alignment: AlignmentDirectional.topEnd,
+                    ],
+                    // overflow: Overflow.visible,
+                    clipBehavior: Clip.none,
+                    alignment: AlignmentDirectional.topEnd,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ChooseSidePage(),),
+        ),),
         Container(
           height: mediaHeight * 0.07,
           color: kBottomContainerColor,
