@@ -1,7 +1,9 @@
+import 'package:flash_card/constants.dart';
 import 'package:flash_card/screens/new_card_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_card/models/newinputcard.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,19 +18,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flash Card',
       theme: ThemeData(
-        primaryColor: Colors.yellow,
-        accentColor: Colors.purple,
-        scaffoldBackgroundColor: Colors.greenAccent.shade100,
-        bottomAppBarColor: Colors.purple,
+        primaryColor: kPrimaryColor,
+        accentColor: kAccentColor,
+        scaffoldBackgroundColor: kScaffoldBackColor,
+        bottomAppBarColor: kAccentColor,
         appBarTheme: AppBarTheme(
           // color: Colors.red,
-          backgroundColor: Colors.greenAccent.shade100,
+          backgroundColor: kScaffoldBackColor,
           centerTitle: true,
           actionsIconTheme: IconThemeData(
-            color: Colors.purple,
+            color: kAccentColor,
           ),
           iconTheme: IconThemeData(
-            color: Colors.purple,
+            color: kAccentColor,
           ),
         )
       ),

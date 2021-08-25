@@ -10,6 +10,7 @@ import '../models/dictionary.dart';
 import '../models/flash_card.dart';
 
 class NewCardPage extends StatelessWidget {
+
   final Dictionary storeOfCard = Dictionary();
   final AppBar appBarchik = AppBar(
     elevation: kAppBarElevation,
@@ -85,6 +86,7 @@ class NewCardPage extends StatelessWidget {
         child: HomePageBody(
           addNewCard: addNewCard,
           appBar: appBarchik,
+          storeOfCards: storeOfCard,
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -109,8 +111,9 @@ class NewCardPage extends StatelessWidget {
 class HomePageBody extends StatelessWidget {
   final Function addNewCard;
   final AppBar appBar;
+  final Dictionary storeOfCards;
 
-  HomePageBody({required this.addNewCard, required this.appBar});
+  HomePageBody({required this.addNewCard, required this.appBar, required this.storeOfCards});
 
   @override
   Widget build(BuildContext context) {
@@ -239,11 +242,11 @@ class HomePageBody extends StatelessWidget {
               ],
             ),
           ),
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ChooseSidePage(),),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ChooseSidePage(listOfCards: storeOfCards,),),
         ),),
         Container(
           height: mediaHeight * 0.07,
-          color: kBottomContainerColor,
+          color: Theme.of(context).scaffoldBackgroundColor,
         ),
       ],
     );

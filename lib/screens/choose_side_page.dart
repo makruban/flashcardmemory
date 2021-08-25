@@ -1,7 +1,15 @@
+import 'package:flash_card/models/ActionButton.dart';
+import 'package:flash_card/models/dictionary.dart';
 import 'package:flash_card/models/selected_side_card.dart';
+import 'package:flash_card/screens/study_card_page.dart';
 import 'package:flutter/material.dart';
 
 class ChooseSidePage extends StatelessWidget {
+
+  final Dictionary listOfCards;
+
+  ChooseSidePage({required this.listOfCards});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,12 +21,17 @@ class ChooseSidePage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: PickSide(),
+      body: PickSide(listOfCards: listOfCards,),
     );
   }
 }
 
 class PickSide extends StatefulWidget {
+
+  Dictionary listOfCards;
+
+  PickSide({required this.listOfCards});
+
   @override
   _PickSideState createState() => _PickSideState();
 }
@@ -28,8 +41,10 @@ class _PickSideState extends State<PickSide> {
 
   @override
   Widget build(BuildContext context) {
-    Color activeButtonColor = Theme.of(context).primaryColor;
-    Color inactiveButtonColor = Theme.of(context).scaffoldBackgroundColor;
+    Color activeButtonColor = Theme
+        .of(context)
+        .primaryColor;
+    Color inactiveButtonColor = Colors.grey.shade300;
     return Container(
       // padding: EdgeInsets.only(left: 20.0, right: 20.0),
       child: Column(
@@ -49,9 +64,9 @@ class _PickSideState extends State<PickSide> {
                   });
                 },
                 backgroundSelectedCard:
-                    selectedSideCard == SelectedSideCard.firstSide
-                        ? activeButtonColor
-                        : inactiveButtonColor,
+                selectedSideCard == SelectedSideCard.firstSide
+                    ? activeButtonColor
+                    : inactiveButtonColor,
               ),
             ),
           ),
@@ -69,9 +84,9 @@ class _PickSideState extends State<PickSide> {
                   });
                 },
                 backgroundSelectedCard:
-                    selectedSideCard == SelectedSideCard.secondSide
-                        ? activeButtonColor
-                        : inactiveButtonColor,
+                selectedSideCard == SelectedSideCard.secondSide
+                    ? activeButtonColor
+                    : inactiveButtonColor,
               ),
             ),
           ),
@@ -90,29 +105,46 @@ class _PickSideState extends State<PickSide> {
                   });
                 },
                 backgroundSelectedCard:
-                    selectedSideCard == SelectedSideCard.randomSide
-                        ? activeButtonColor
-                        : inactiveButtonColor,
+                selectedSideCard == SelectedSideCard.randomSide
+                    ? activeButtonColor
+                    : inactiveButtonColor,
               ),
             ),
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(28.0),
-              child: ElevatedButton(
-                child: Text(
-                  'Поехали',
-                ),
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  primary: selectedSideCard == null ? Colors.grey : Theme.of(context).accentColor,
-                  elevation: 8.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
+              padding: const EdgeInsets.only(bottom: 40.0, top: 10.0),
+              child: ActionButton(
+                mediaHeight: 1,
+                title: 'Поехали',
+                color: selectedSideCard == null ? Colors.grey.shade300 : Colors.green,
+                onPress: selectedSideCard == null ? (){} : () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => StudyCardPage(listOfCards: widget.listOfCards,),),);
+        },
               ),
             ),
+            // child: Padding(
+            //   padding: const EdgeInsets.all(28.0),
+            //   child: ElevatedButton(
+            //     child: Text(
+            //       'Поехали',
+            //     ),
+            //     onPressed: selectedSideCard == null ? (){} : () {
+            //       Navigator.push(context,
+            //         MaterialPageRoute(builder: (context) => StudyCardPage(),),);
+            //     },
+            //     style: ElevatedButton.styleFrom(
+            //       primary: selectedSideCard == null ? Colors.grey.shade300 : Theme
+            //           .of(context)
+            //           .accentColor,
+            //       elevation: 8.0,
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(10.0),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ),
         ],
       ),

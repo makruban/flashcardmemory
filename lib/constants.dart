@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+const kPrimaryColor = Colors.yellow;
+const kAccentColor = Colors.purple;
+const kScaffoldBackColor = Color(0xFFF3E5F5);
+
 const kBottomContainerColor = Colors.purple;
 const kAppBarElevation = 0.0;
 const kDictionaryAmountSize = 18.0;
