@@ -1,14 +1,14 @@
-import 'package:flash_card/models/ActionButton.dart';
+import 'package:flash_card/models/action_button.dart';
 import 'package:flash_card/models/dictionary.dart';
 import 'package:flash_card/models/selected_side_card.dart';
-import 'package:flash_card/screens/study_card_page.dart';
+import 'package:flash_card/screens/studying_screen.dart';
 import 'package:flutter/material.dart';
 
-class ChooseSidePage extends StatelessWidget {
+class ChooseSideScreen extends StatelessWidget {
 
   final Dictionary listOfCards;
 
-  ChooseSidePage({required this.listOfCards});
+  ChooseSideScreen({required this.listOfCards});
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +120,7 @@ class _PickSideState extends State<PickSide> {
                 color: selectedSideCard == null ? Colors.grey.shade300 : Colors.green,
                 onPress: selectedSideCard == null ? (){} : () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => StudyCardPage(listOfCards: widget.listOfCards,),),);
+              MaterialPageRoute(builder: (context) => StudyingScreen(listOfCards: widget.listOfCards,),),);
         },
               ),
             ),

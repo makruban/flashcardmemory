@@ -1,15 +1,17 @@
 import 'package:flash_card/constants.dart';
 import 'package:flash_card/dictionary_list.dart';
 import 'package:flash_card/main.dart';
-import 'package:flash_card/models/redictioncontainer.dart';
-import 'package:flash_card/screens/choose_side_page.dart';
+import 'package:flash_card/models/reusable_container.dart';
+import 'package:flash_card/screens/choose_side_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../models/newinputcard.dart';
 import '../models/dictionary.dart';
 import '../models/flash_card.dart';
 
-class NewCardPage extends StatelessWidget {
+class AddingScreen extends StatelessWidget {
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final Dictionary storeOfCard = Dictionary();
   final AppBar appBarchik = AppBar(
@@ -37,7 +39,7 @@ class NewCardPage extends StatelessWidget {
           ),
           onPressed: () {
             keyInput.currentState?.addNewInputCard();
-            keyInput.currentState?.validateForm();
+            // keyInput.currentState?.validateForm();
           },
         ),
       ),
@@ -55,6 +57,7 @@ class NewCardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: appBarchik,
       drawer: Drawer(
         child: ListView(
@@ -87,6 +90,7 @@ class NewCardPage extends StatelessWidget {
           addNewCard: addNewCard,
           appBar: appBarchik,
           storeOfCards: storeOfCard,
+          scaffoldKey: _scaffoldKey,
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -112,8 +116,9 @@ class HomePageBody extends StatelessWidget {
   final Function addNewCard;
   final AppBar appBar;
   final Dictionary storeOfCards;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
-  HomePageBody({required this.addNewCard, required this.appBar, required this.storeOfCards});
+  HomePageBody({required this.addNewCard, required this.appBar, required this.storeOfCards, required this.scaffoldKey});
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +143,7 @@ class HomePageBody extends StatelessWidget {
           child: NewInputCard(
             addNewCard: addNewCard,
             keyInput: keyInput,
+            scaffoldKey: scaffoldKey,
             // newInputDictionary: newDictionary,
           ),
         ),
@@ -147,16 +153,16 @@ class HomePageBody extends StatelessWidget {
             child: Stack(
               children: [
                 // Container(),
-                ReDictionContainer(
+                ReusableContainer(
                   marginContainer: EdgeInsets.only(
                       left: 38.0, right: 62.0, top: 42.0, bottom: 18.0),
                   boxShadowList: kBoxShadow,
                 ),
-                ReDictionContainer(
+                ReusableContainer(
                   marginContainer: EdgeInsets.only(
                       left: 44.0, right: 56.0, top: 36.0, bottom: 24.0),
                 ),
-                ReDictionContainer(
+                ReusableContainer(
                   marginContainer: EdgeInsets.symmetric(horizontal: 50.0, vertical: 30.0),
                   child: Stack(
                     children: [
@@ -242,7 +248,7 @@ class HomePageBody extends StatelessWidget {
               ],
             ),
           ),
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ChooseSidePage(listOfCards: storeOfCards,),),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ChooseSideScreen(listOfCards: storeOfCards,),),
         ),),
         Container(
           height: mediaHeight * 0.07,

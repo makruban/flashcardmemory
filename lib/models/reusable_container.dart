@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ReDictionContainer extends StatelessWidget {
+class ReusableContainer extends StatelessWidget {
   final EdgeInsetsGeometry? marginContainer;
   final Widget? child;
   final List<BoxShadow>? boxShadowList;
 
-  ReDictionContainer({this.marginContainer, this.boxShadowList, this.child});
+  ReusableContainer({this.marginContainer, this.boxShadowList, this.child});
 
   @override
   Widget build(BuildContext context) {

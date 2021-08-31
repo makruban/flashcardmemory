@@ -1,5 +1,5 @@
 import 'package:flash_card/constants.dart';
-import 'package:flash_card/screens/new_card_page.dart';
+import 'package:flash_card/screens/adding_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_card/models/newinputcard.dart';
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           ),
         )
       ),
-      home: NewCardPage(),
+      home: AddingScreen(),
     );
   }
 }
